@@ -1,0 +1,21 @@
+{
+    "name": "SuiLenz",
+    "short_name": "SuiLenz",
+    "description": "High-fidelity Sui transaction visualization and analysis.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#09090b",
+    "theme_color": "#09090b",
+    "icons": [
+        {
+            "src": "/scan-eye.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/scan-eye.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
