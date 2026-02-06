@@ -4,7 +4,7 @@
 
 SuiLenz is a next-generation block explorer and transaction analysis tool designed specifically for the detailed object-centric model of Sui. It translates complex on-chain data into human-readable narratives and visual flowcharts using Mermaid.js.
 
-![SuiLenz Preview](https://suilenz.vercel.app/)
+[SuiLenz Preview](https://suilenz.vercel.app/)
 
 ## ✨ Features
 
