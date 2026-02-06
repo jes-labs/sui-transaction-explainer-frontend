@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { getMetadata } from "@/lib/getMetadata"
 import { IBM_Plex_Sans, IBM_Plex_Mono, Bebas_Neue } from "next/font/google"
 import { SmoothScroll } from "@/components/smooth-scroll"
 import { QueryProvider } from "@/providers/query-provider"
@@ -24,13 +25,10 @@ const bebasNeue = Bebas_Neue({
   variable: "--font-bebas"
 })
 
-export const metadata: Metadata = {
-  title: "SuiLenz - Transaction Explainer",
-  description: "High-fidelity Sui transaction visualization and analysis.",
-  icons: {
-    icon: "/scan-eye.png",
-  }
-}
+export const metadata: Metadata = getMetadata({
+  title: "SuiLenz",
+  description: "High-fidelity Sui transaction visualization and analysis."
+})
 
 export default function RootLayout({
   children,
