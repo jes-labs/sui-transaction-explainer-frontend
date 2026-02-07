@@ -29,8 +29,8 @@ export function HowItWorks() {
     return (
         <section id="how-it-works" className="py-24 border-t border-border/50 bg-background">
             <div className="max-w-7xl mx-auto px-6 md:px-12">
-                <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                    <div>
+                <div className="flex flex-col md:flex-row justify-between items-start mb-16 gap-6">
+                    <div className="w-full flex flex-col">
                         <span className="font-mono text-xs text-accent uppercase tracking-widest mb-4 block">
                             Workflow
                         </span>
@@ -39,7 +39,7 @@ export function HowItWorks() {
                         </h2>
                     </div>
 
-                    <p className="font-mono text-sm text-muted-foreground max-w-md text-right md:text-left">
+                    <p className="font-mono text-sm text-muted-foreground max-w-md text-left">
                         From raw bytes to clarity in four automated steps.
                     </p>
                 </div>
