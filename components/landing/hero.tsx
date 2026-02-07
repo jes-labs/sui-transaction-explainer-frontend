@@ -35,7 +35,7 @@ export function Hero() {
     }, [])
 
     return (
-        <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center pl-6 md:pl-28 pr-6 md:pr-12 pt-20">
+        <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center pl-6 md:pl-28 pr-6 md:pr-12 pt-20">
             <AnimatedNoise opacity={0.03} />
 
             {/* Left vertical labels */}
@@ -46,7 +46,7 @@ export function Hero() {
             </div>
 
             {/* Main content */}
-            <div ref={contentRef} className="flex-1 w-full">
+            <div ref={contentRef} className="max-w-7xl flex flex-col items-center">
                 <SplitFlapAudioProvider>
                     <div className="relative">
                         <SplitFlapText text="SUILENZ" speed={80} />
@@ -57,7 +57,7 @@ export function Hero() {
                     SEE EXACTLY WHAT HAPPENED
                 </h2>
 
-                <p className="mt-12 max-w-md font-mono text-base text-muted-foreground leading-relaxed">
+                <p className="md:mt-12 mt-8 max-w-md font-mono text-base text-muted-foreground leading-relaxed">
                     Transaction digests are built for machines. SuiLenz is built for you. Decode complex Move calls, object mutations, and gas consumption into a clear, simple story.
                 </p>
 
