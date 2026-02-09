@@ -70,8 +70,13 @@ function runScrambleAnimation(
  * Scramble text animation component - animates on mount.
  */
 export function ScrambleText({ text, className, delayMs = 0, duration = 0.9 }: ScrambleTextProps) {
-    // Initialize with text to avoid flash of empty content
-    const [displayText, setDisplayText] = useState(text)
+    // Initialize with scrambled text to avoid flash of empty content or sync setState
+    const [displayText, setDisplayText] = useState(() => {
+        return text
+            .split("")
+            .map(() => GLYPHS[Math.floor(Math.random() * GLYPHS.length)])
+            .join("")
+    })
     const [hasAnimated, setHasAnimated] = useState(false)
     const containerRef = useRef<HTMLSpanElement>(null)
     const animationRef = useRef<gsap.core.Tween | null>(null)
@@ -79,14 +84,8 @@ export function ScrambleText({ text, className, delayMs = 0, duration = 0.9 }: S
 
     // Run animation only once on initial mount
     useEffect(() => {
-        if (hasAnimated || !text) return
-
-        // Start with scrambled text
-        const scrambledStart = text
-            .split("")
-            .map(() => GLYPHS[Math.floor(Math.random() * GLYPHS.length)])
-            .join("")
-        setDisplayText(scrambledStart)
+        // If we want to delay, the initial state is already scrambled.
+        // We just need to start the tween to "unscramble" (or scramble to final)
 
         timeoutRef.current = setTimeout(() => {
             animationRef.current = runScrambleAnimation(text, duration, setDisplayText, () => {
@@ -100,16 +99,12 @@ export function ScrambleText({ text, className, delayMs = 0, duration = 0.9 }: S
         }
     }, []) // Empty deps - only run on mount
 
-    // Handle text prop changes after initial animation
-    useEffect(() => {
-        if (hasAnimated && displayText !== text) {
-            setDisplayText(text)
-        }
-    }, [text, hasAnimated, displayText])
+    // When hasAnimated is true, we simply render 'text' directly in the JSX,
+    // so we don't need an effect to sync displayText to text.
 
     return (
         <span ref={containerRef} className={className}>
-            {displayText || text}
+            {hasAnimated ? text : displayText}
         </span>
     )
 }
@@ -146,13 +141,19 @@ export function ScrambleTextOnHover({
 
         tweenRef.current = runScrambleAnimation(text, duration, setDisplayText, () => {
             isAnimating.current = false
+            // Ensure we end with the current prop text
+            // Note: runScrambleAnimation calls setDisplayText(text) on complete,
+            // but 'text' here is closed over.
+            // That's fine for the hover effect scope.
         })
     }, [text, duration])
 
     // Update display text if text prop changes
     useEffect(() => {
         if (!isAnimating.current) {
-            setDisplayText(text)
+            // Using setTimeout to break synchronous render cycle
+            const t = setTimeout(() => setDisplayText(text), 0)
+            return () => clearTimeout(t)
         }
     }, [text])
 

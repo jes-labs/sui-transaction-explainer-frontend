@@ -28,6 +28,9 @@ export function CliSection() {
                         </span>
                         <h2 className="font-[var(--font-bebas)] text-4xl md:text-6xl text-foreground leading-none">
                             The CLI Experience
+                            <span className="ml-4 align-middle text-sm font-sans tracking-normal bg-accent/20 text-accent px-3 py-1 rounded-full border border-accent/20 inline-block">
+                                Coming Soon
+                            </span>
                         </h2>
                         <h3 className="font-[var(--font-bebas)] text-2xl md:text-3xl text-muted-foreground mt-2">
                             Built for the Power User.

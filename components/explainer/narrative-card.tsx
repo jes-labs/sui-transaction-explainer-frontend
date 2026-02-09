@@ -28,7 +28,7 @@ export function NarrativeCard({ narrative, digest, gasUsed, status }: NarrativeC
                 </span>
             </div>
 
-            <h1 className="text-2xl md:text-4xl font-medium text-foreground mb-6 leading-tight font-satoshi">
+            <h1 className="text-2xl md:text-2xl font-medium text-foreground mb-6 leading-tight font-satoshi">
                 {narrative}
             </h1>
 
