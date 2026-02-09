@@ -2,7 +2,6 @@
 
 import { NftItem } from "@/types/api"
 import { Image as ImageIcon, Box, ChevronLeft, ChevronRight } from "lucide-react"
-import Image from "next/image"
 import { useState } from "react"
 import { useSuiNFTImages } from "@/hooks/use-sui-nfts"
 
@@ -21,15 +20,14 @@ const NFTImage = ({ src, alt, className }: { src: string, alt: string, className
         );
     }
 
+    // Use standard img tag for maximum compatibility with external/IPFS URLs
     return (
-        <Image
+        <img
             src={src}
             alt={alt}
-            fill
-            className={className}
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            unoptimized
+            className={`w-full h-full object-cover ${className || ''}`}
             onError={() => setError(true)}
+            loading="lazy"
         />
     );
 };
