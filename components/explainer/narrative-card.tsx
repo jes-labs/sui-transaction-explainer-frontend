@@ -68,7 +68,7 @@ export function NarrativeCard({ narrative, digest, gasUsed, status }: NarrativeC
                         Status
                     </span>
                     <div className="flex items-center gap-2 mt-2 pt-2">
-                        <div className={cn("w-2 h-2 rounded-full", status === "Success" ? "bg-green-500" : "bg-red-500")}></div>
+                        <div className={cn("w-2 h-2 rounded-full", status === "success" ? "bg-green-500" : "bg-red-500")}></div>
                         <span className="text-foreground font-semibold">
                             {status}
                         </span>
