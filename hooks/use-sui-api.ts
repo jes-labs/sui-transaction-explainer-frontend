@@ -95,17 +95,26 @@ export const useSuiAddressNfts = (address: string | null) => {
   });
 };
 
+import { getJsonRpcFullnodeUrl, SuiJsonRpcClient } from '@mysten/sui/jsonRpc';
+
+// Initialize Client (Mainnet)
+const suiClient = new SuiJsonRpcClient({ 
+    network: 'mainnet',
+    url: getJsonRpcFullnodeUrl('mainnet') 
+});
+
 export const useSuiTransactionExplain = (digest: string | null): UseQueryResult<FullTransactionDetails, Error> => {
     return useQuery({
         queryKey: ["transaction", "full-explain", digest],
         queryFn: async () => {
             if (!digest) throw new Error("No digest provided");
 
-            // Fetch from all 3 endpoints concurrently
-            const [explainRes, detailedRes, plainRes] = await Promise.allSettled([
+            // Fetch from all 3 endpoints concurrently AND Fetch full tx from Sui Network
+            const [explainRes, detailedRes, plainRes, fullTxRes] = await Promise.allSettled([
                 fetchExplainDigest(digest),
                 fetchDetailedDigest(digest),
-                fetchPlainDigest(digest)
+                fetchPlainDigest(digest),
+                suiClient.getTransactionBlock({ digest, options: { showInput: true } })
             ]);
 
             // Helper to get value or null
@@ -115,13 +124,17 @@ export const useSuiTransactionExplain = (digest: string | null): UseQueryResult<
             const explainData = getValue(explainRes);
             const detailedData = getValue(detailedRes);
             const plainData = getValue(plainRes);
+            const fullTxData = getValue(fullTxRes);
 
             // Construct FullTransactionDetails with fallback logic
             // We prioritize 'plainData' for narrative, 'explainData' for technicals, 'detailedData' for assets
             
             // Base fields (prefer explainData, fallback to plainData/detailedData)
             const timestamp = explainData?.timestamp || plainData?.timestamp || "Unknown Time";
-            const sender = explainData?.sender || plainData?.sender || "Unknown Sender";
+            
+            // Prefer full address from Sui Network, fallback to API
+            const sender = fullTxData?.transaction?.data.sender || explainData?.sender || plainData?.sender || "Unknown Sender";
+            
             const status = explainData?.status || plainData?.status || "Unknown";
 
             // Narrative
